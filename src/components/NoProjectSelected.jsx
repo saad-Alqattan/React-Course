@@ -1,6 +1,9 @@
 import noProjectImage from '../assets/no-projects.png';
 import Button from './Button.jsx';
 
+
+//This will show when we don't have any project to show
+
 export default function NoProjectSelected({ onStartAddProject }) {
   return (
     <div className="mt-24 text-center w-2/3">
@@ -16,7 +19,11 @@ export default function NoProjectSelected({ onStartAddProject }) {
         Select a project or get started with a new one
       </p>
       <p className="mt-8">
-        <Button onClick={onStartAddProject}>Create new project</Button>
+
+      {/* this button will change electedProjectId: to  null and show No project selected  */}
+        <Button onClick={onStartAddProject}>Create new project</Button> 
+
+        
       </p>
     </div>
   );
