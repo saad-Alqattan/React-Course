@@ -3,6 +3,7 @@ import { useState } from 'react';
 import NewProject from './components/NewProject.jsx';
 import NoProjectSelected from './components/NoProjectSelected.jsx';
 import ProjectsSidebar from './components/ProjectsSidebar.jsx';
+import SelectedProject from './components/SelectedProject.jsx';
 
 function App() {
   const [projectsState, setProjectsState] = useState({
@@ -10,13 +11,20 @@ function App() {
     projects: [],
   });
 
-  console.log(projectsState)
-
-  function handleStartAddProject() {           //this function will tergert after button  press from NoProjectSelected or from ProjectsSidebar
+  function handleSelectProject(id) {
     setProjectsState((prevState) => {
       return {
         ...prevState,
-        selectedProjectId: null,          
+        selectedProjectId: id,
+      };
+    });
+  }
+
+  function handleStartAddProject() {
+    setProjectsState((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: null,
       };
     });
   }
@@ -30,48 +38,56 @@ function App() {
     });
   }
 
-  function handleAddProject(projectData) {      //This will tergert after press save button in NewPROJECT 
-                                                 /* onAdd({
-                                                    title: enteredTitle,
-                                                     description: enteredDescription,
-                                                       dueDate: enteredDueDate,
-    }); */
-    setProjectsState((prevState) => {            
+  function handleAddProject(projectData) {
+    setProjectsState((prevState) => {
       const projectId = Math.random();
       const newProject = {
         ...projectData,
         id: projectId,
       };
-   
+
       return {
         ...prevState,
-        selectedProjectId: undefined,     //selectedProjectId not the same  projectId
+        selectedProjectId: undefined,
         projects: [...prevState.projects, newProject],
-
-       
       };
-    
-      
     });
   }
 
-  let content;
+  function handleDeleteProject() {
+    setProjectsState((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+        projects: prevState.projects.filter(
+          (project) => project.id !== prevState.selectedProjectId
+        ),
+      };
+    });
+  }
 
-  if (projectsState.selectedProjectId === null) {   //This will be trgert to null after press button from NoProjectSelected OR  ProjectsSidebar BUTTON 
+  const selectedProject = projectsState.projects.find(
+    (project) => project.id === projectsState.selectedProjectId
+  );
+
+  let content = (
+    <SelectedProject project={selectedProject} onDelete={handleDeleteProject} />
+  );
+
+  if (projectsState.selectedProjectId === null) {
     content = (
-      <NewProject onAdd={handleAddProject} onCancel={handleCancelAddProject} /> 
+      <NewProject onAdd={handleAddProject} onCancel={handleCancelAddProject} />
     );
-  } else if (projectsState.selectedProjectId === undefined) { // this mean we dont have any project to show and mean undifine
-    content = <NoProjectSelected onStartAddProject={handleStartAddProject} />; //NoProjectSelected will show imge becuse no project 
-                                 // onStartAddProject Button tregert from  NoProjectSelected
-
+  } else if (projectsState.selectedProjectId === undefined) {
+    content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
 
   return (
     <main className="h-screen my-8 flex gap-8">
       <ProjectsSidebar
         onStartAddProject={handleStartAddProject}
-        projects={projectsState.projects}    //ADDED PROJECT FROM STATE ABOVE AND FORWARD TO PROJECT SIDE BAR 
+        projects={projectsState.projects}
+        onSelectProject={handleSelectProject}
       />
       {content}
     </main>

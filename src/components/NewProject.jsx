@@ -6,9 +6,6 @@ import Modal from './Modal.jsx';
 export default function NewProject({ onAdd, onCancel }) {
   const modal = useRef();
 
-
-
-  // we will store value come from input 
   const title = useRef();
   const description = useRef();
   const dueDate = useRef();
@@ -17,11 +14,8 @@ export default function NewProject({ onAdd, onCancel }) {
     const enteredTitle = title.current.value;
     const enteredDescription = description.current.value;
     const enteredDueDate = dueDate.current.value;
-     
-    //we will forward this to app throw onAdd()
 
-
-    if (//we need this to cheack if it is eamty input 
+    if (
       enteredTitle.trim() === '' ||
       enteredDescription.trim() === '' ||
       enteredDueDate.trim() === ''
@@ -30,7 +24,6 @@ export default function NewProject({ onAdd, onCancel }) {
       return;
     }
 
-    //forward to app then renderd in project array 
     onAdd({
       title: enteredTitle,
       description: enteredDescription,
