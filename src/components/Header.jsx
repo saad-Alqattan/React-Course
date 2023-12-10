@@ -1,10 +1,10 @@
-import logo from '../assets/investment-calculator-logo.png';
+import logoImg from '../assets/quiz-logo.png';
 
 export default function Header() {
   return (
-    <header id="header">
-      <img src={logo} alt="Logo showing a money bag" />
-      <h1>Investment Calculator</h1>
+    <header>
+      <img src={logoImg} alt="Quiz logo" />
+      <h1>ReactQuiz</h1>
     </header>
   );
 }
