@@ -8,8 +8,8 @@ export default function QuestionTimer({ timeout, onTimeout }) {
     const timer = setTimeout(onTimeout, timeout);
 
     return () => {
-       clearTimeout(timer);
-     };
+      clearTimeout(timer);
+    };
   }, [timeout, onTimeout]);
 
   useEffect(() => {
