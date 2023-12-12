@@ -1,31 +1,35 @@
 import { useState } from 'react';
 
+import Counter from './components/Counter/Counter.jsx';
 import Header from './components/Header.jsx';
-import UserInput from './components/UserInput.jsx';
-import Results from './components/Results.jsx';
+import { log } from './log.js';
 
 function App() {
-  const [userInput, setUserInput] = useState({
-    initialInvestment: 10000,
-    annualInvestment: 1200,
-    expectedReturn: 6,
-    duration: 10,
-  });
+  log('<App /> rendered');
 
-  function handleChange(inputIdentifier, newValue) {
-    setUserInput((prevUserInput) => {
-      return {
-        ...prevUserInput,
-        [inputIdentifier]: newValue,
-      };
-    });
+  const [enteredNumber, setEnteredNumber] = useState(0);
+  const [chosenCount, setChosenCount] = useState(0);
+
+  function handleChange(event) {
+    setEnteredNumber(+event.target.value);
+  }
+
+  function handleSetClick() {
+    setChosenCount(enteredNumber);
+    setEnteredNumber(0);
   }
 
   return (
     <>
       <Header />
-      <UserInput userInput={userInput} onChange={handleChange} />
-      <Results input={userInput} />
+      <main>
+        <section id="configure-counter">
+          <h2>Set Counter</h2>
+          <input type="number" onChange={handleChange} value={enteredNumber} />
+          <button onClick={handleSetClick}>Set</button>
+        </section>
+        <Counter initialCount={chosenCount} />
+      </main>
     </>
   );
 }
