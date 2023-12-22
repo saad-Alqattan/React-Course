@@ -1,15 +1,15 @@
-import classes from './MainNavigation.module.css';
+import classes from './EventsNavigation.module.css';
 
-function MainNavigation() {
+function EventsNavigation() {
   return (
     <header className={classes.header}>
       <nav>
         <ul className={classes.list}>
           <li>
-            <a>Home</a>
+            <a href="/events">All Events</a>
           </li>
           <li>
-            <a>Events</a>
+            <a href="/events/new">New Event</a>
           </li>
         </ul>
       </nav>
@@ -17,4 +17,4 @@ function MainNavigation() {
   );
 }
 
-export default MainNavigation;
+export default EventsNavigation;
